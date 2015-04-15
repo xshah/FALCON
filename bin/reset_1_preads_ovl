@@ -1,0 +1,1 @@
+cd 1-preads_ovl && rm -rf preads job_* las_files preads.* .preads.* run_jobs.sh rdb_build_done preads_norm.fasta m_* *done && cd -
