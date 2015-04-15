@@ -177,7 +177,7 @@ def run_daligner(self):
     log_path = os.path.join( script_dir, "rj_%s.log" % (job_uid))
 
     script = []
-    script.append( "module load python\n")
+    script.append( "module load python py_packages\n")
     script.append( "source {install_prefix}/bin/activate\n".format(install_prefix = install_prefix) )
     script.append( "cd %s" % cwd )
     script.append( "hostname >> %s" % log_path )
@@ -246,7 +246,7 @@ def run_consensus_task(self):
     length_cutoff = config["length_cutoff"]
 
     with open( os.path.join(cwd, "cp_%05d.sh" % job_id), "w") as c_script:
-        print >> c_script, "module load python\n"
+        print >> c_script, "module load python py_packages\n"
         print >> c_script, "source {install_prefix}/bin/activate\n".format(install_prefix = install_prefix)
         print >> c_script, "mkdir /dev/shm/shahh06"
         print >> c_script, "cp ../.*idx ../.*bps ../*.db /dev/shm/shahh06/."
@@ -259,7 +259,7 @@ def run_consensus_task(self):
         
         print >> c_script, "rm -rf /dev/shm/shahh06"
     script = []
-    script.append( "module load python\n" )
+    script.append( "module load python py_packages\n" )
     script.append( "source {install_prefix}/bin/activate\n".format(install_prefix = install_prefix) )
     script.append( "cd %s" % cwd )
     script.append( "hostname >> %s" % log_path )
