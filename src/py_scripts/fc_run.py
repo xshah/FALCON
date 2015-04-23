@@ -248,16 +248,16 @@ def run_consensus_task(self):
     with open( os.path.join(cwd, "cp_%05d.sh" % job_id), "w") as c_script:
         print >> c_script, "module load python py_packages\n"
         print >> c_script, "source {install_prefix}/bin/activate\n".format(install_prefix = install_prefix)
-        print >> c_script, "mkdir /dev/shm/shahh06"
-        print >> c_script, "cp ../.*idx ../.*bps ../*.db /dev/shm/shahh06/."
+        print >> c_script, "mkdir /dev/shm/shahh06.%d" % (job_id)
+        print >> c_script, "cp ../.*idx ../.*bps ../*.db /dev/shm/shahh06.%d/." % (job_id)
         print >> c_script, "cd .."
         if config["falcon_sense_skip_contained"] == True:
-            print >> c_script, """LA4Falcon -H%d -so -f:%s las_files/%s.%d.las | """ % (length_cutoff, prefix, prefix, job_id),
+            print >> c_script, """LA4Falcon -H%d -so -f:/dev/shm/shahh06.%d/%s las_files/%s.%d.las | """ % (length_cutoff, job_id, prefix, prefix, job_id),
         else:
-            print >> c_script, """LA4Falcon -H%d -o -f:%s las_files/%s.%d.las | """ % (length_cutoff, prefix, prefix, job_id),
+            print >> c_script, """LA4Falcon -H%d -o -f:/dev/shm/shahh06.%d/%s las_files/%s.%d.las | """ % (length_cutoff, job_id, prefix, prefix, job_id),
         print >> c_script, """fc_consensus.py %s > %s""" % (falcon_sense_option, fn(self.out_file))
         
-        print >> c_script, "rm -rf /dev/shm/shahh06"
+        print >> c_script, "rm -rf /dev/shm/shahh06.%d" % (job_id)
     script = []
     script.append( "module load python py_packages\n" )
     script.append( "source {install_prefix}/bin/activate\n".format(install_prefix = install_prefix) )
